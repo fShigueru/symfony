@@ -20,7 +20,7 @@ class DefaultController extends Controller
      */
     public function runAction($marca, $modelo)
     {
-    	$carro['marca'] = $marca;
+    	$carro['marca']  = $marca;
     	$carro['modelo'] = $modelo;
     	return $this->render('AppBundle:Default:run.html.twig', ['carro' => $carro]);
     }
