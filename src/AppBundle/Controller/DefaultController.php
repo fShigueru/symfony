@@ -16,7 +16,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/run/{marca}/{modelo}", name="homepage")
+     * @Route("/run/{marca}/{modelo}", name="runpage")
      */
     public function runAction($marca, $modelo)
     {
