@@ -1,7 +1,7 @@
 code_categoria:
     resource: "@CodeCategoriaBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /categoria
 
 code_car:
     resource: "@CodeCarBundle/Controller/"
@@ -11,7 +11,7 @@ code_car:
 code_produto:
     resource: "@CodeProdutoBundle/Controller/"
     type:     annotation
-    prefix:   /produto/
+    prefix:   /produto
 
 app:
     resource: @AppBundle/Controller/
