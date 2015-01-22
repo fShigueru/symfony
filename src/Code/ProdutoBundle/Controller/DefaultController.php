@@ -39,7 +39,9 @@ class DefaultController extends Controller
         //$repo = $em->getRepository("Code\ProdutoBundle\Entity\Produto");
         $repo = $em->getRepository("CodeProdutoBundle:Produto");
         //busca todos
-        $produtos = $repo->findAll();
+        //$produtos = $repo->findAll();
+        //metodo criado no ProdutoRepository
+        $produtos = $repo->getProdutoIdMaiorQue(1);
 
     	return ['produtos' => $produtos];
     }
