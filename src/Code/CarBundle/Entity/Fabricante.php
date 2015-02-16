@@ -1,12 +1,13 @@
 <?php
 namespace  Code\CarBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 
 /**
  * @ORM\Table();
- * @ORM\Entity(repositoryClass="Code\CarBundle\Entity\FabricanteRepository");
+ * @ORM\Entity();
  */
 class Fabricante
 {
@@ -28,6 +29,17 @@ class Fabricante
 	 */
 	private $nome;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="Code\CarBundle\Entity\Carro", mappedBy="fabricante")
+	 */
+	private $carros;
+
+	//vai inicializar a collection de produtos
+	public function __construct()
+	{
+		$this->carros = new ArrayCollection();
+	}
+
 	public function getId()
 	{
 	    return $this->id;
@@ -46,5 +58,15 @@ class Fabricante
 	public function setNome($nome)
 	{
 	    $this->nome = $nome;
+	}
+
+	public function getCarros()
+	{
+	    return $this->carros;
+	}
+
+	public function setCarros($carros)
+	{
+	    $this->carros = $carros;
 	}
 }

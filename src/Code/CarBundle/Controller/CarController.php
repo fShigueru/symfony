@@ -5,11 +5,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Code\CarBundle\Entity\Carro;
+use Code\CarBundle\Entity\Fabricante;
 
 class CarController extends Controller
 {
     /**
-     * @Route("")
+     * @Route("", name="listaCarros")
      * @Template()
      */
     public function indexAction()
@@ -20,9 +21,9 @@ class CarController extends Controller
         //Repository da entidade Carro
         $repo = $em->getRepository("CodeCarBundle:Carro");
         //busca todos
-        $cars = $repo->findAll();
+        $carros = $repo->findAll();
 
-        return ['cars' => $cars];
+        return ['carros' => $carros];
     }
 
     /**
@@ -31,48 +32,42 @@ class CarController extends Controller
      */
     public function saveAction()
     {
+        //chama o entyti manager
+        $em = $this->getDoctrine()->getManager();
 
-        //lista de carros
-        $cars[0]['marca'] = "GM";
-        $cars[0]['modelo'] = "Cobalt";
-        $cars[0]['ano'] = 2008;
-        $cars[0]['cor'] = "prata";
+        $repo = $em->getRepository("CodeCarBundle:Fabricante");
 
-        $cars[1]['marca'] = "Honda";
-        $cars[1]['modelo'] = "City";
-        $cars[1]['ano'] = 2012;
-        $cars[1]['cor'] = "vermelho";
+        //busca fabricantes
+        $fabricante1 = $repo->find(1);
+        $fabricante2 = $repo->find(2);
+        $fabricante3 = $repo->find(3);
 
-        $cars[2]['marca'] = "Jac Motors";
-        $cars[2]['modelo'] = "J3 Turin";
-        $cars[2]['ano'] = 2014;
-        $cars[2]['cor'] = "preto";
+        $carro = new Carro();
+        $carro->setModelo("Sportage");
+        $carro->setFabricante($fabricante1);
+        $carro->setAno(2007);
+        $carro->setCor("Preto");
 
-        $cars[3]['marca'] = "Peugeot";
-        $cars[3]['modelo'] = "207 Sedan";
-        $cars[3]['ano'] = 2010;
-        $cars[3]['cor'] = "azul";
+        $carro2 = new Carro();
+        $carro2->setModelo("Lincoln Mark LT");
+        $carro2->setFabricante($fabricante2);
+        $carro2->setAno(2006);
+        $carro2->setCor("Prata");
 
-        $cars[4]['marca'] = "Volkswagen";
-        $cars[4]['modelo'] = "Polo Sedan";
-        $cars[4]['ano'] = 2007;
-        $cars[4]['cor'] = "preto";
+        $carro3 = new Carro();
+        $carro3->setModelo("Lotus 61");
+        $carro3->setFabricante($fabricante3);
+        $carro3->setAno(2011);
+        $carro3->setCor("Branco");
 
-        foreach ($cars as $key => $data) {
-            $carro = new Carro();
-            $carro->setModelo($data["modelo"]);
-            $carro->setFabricante($data["marca"]);
-            $carro->setAno($data["ano"]);
-            $carro->setCor($data["cor"]);
-            //chama o entyti manager
-            $em = $this->getDoctrine()->getManager();
-            //persiste a entidade
-            $em->persist($carro);
-            //grava
-            $em->flush();
-        }
+        //persiste a entidade
+        $em->persist($carro);
+        $em->persist($carro2);
+        $em->persist($carro3);
+        //grava
+        $em->flush();
 
-        echo "Gravou";
-        die;
+        return $this->redirect($this->generateUrl('listaCarros'));
     }
+
 }

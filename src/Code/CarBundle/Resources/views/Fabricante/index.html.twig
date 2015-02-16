@@ -1,0 +1,18 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Lista de fabricantes{% endblock %}
+
+{% block body %}
+	<h1>Fabricantes</h1>
+	<ul>
+		{% for fabricante in fabricantes %}
+			<li>Fabricante: {{ fabricante.nome }}</li>
+			<ul>
+				{% for carro in fabricante.carros %}
+					<li>{{ carro.modelo }}</li>
+				{% endfor %}
+			</ul>
+		{% endfor %}
+
+	</ul>
+{% endblock %}

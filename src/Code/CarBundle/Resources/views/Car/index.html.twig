@@ -4,21 +4,10 @@
 
 {% block body %}
 	<h1>Lista de carros</h1>
-	<table>
-		<tr>
-			<td>MARCA</td>
-			<td>MODELO</td>
-		</tr>
-		{% for key,car in cars %}
-			<tr></tr>
-			<tr>
-				<td>
-					{{ car.fabricante|upper }}
-				</td>
-				<td>
-					{{ car.modelo|upper }}
-				</td>
-			</tr>
+	<ul>
+		{% for carro in carros %}
+			<li>Carro: ({{ carro.modelo }}) - Fabricante: ({{ carro.fabricante.nome }})</li>
 		{% endfor %}
-	</table>
+
+	</ul>
 {% endblock %}

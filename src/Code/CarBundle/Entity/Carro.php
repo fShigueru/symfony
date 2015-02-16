@@ -28,13 +28,6 @@ class Carro
 	private $modelo;
 
 	/**
-	 *@var string
-	 *
-	 * @ORM\Column(name="fabricante", type="string" ,length=255)
-	 */
-	private $fabricante;
-
-	/**
 	 *@var integer
 	 *
 	 * @ORM\Column(name="ano", type="integer" ,length=4)
@@ -47,7 +40,11 @@ class Carro
 	 * @ORM\Column(name="cor", type="string" ,length=20)
 	 */
 	private $cor;
-
+	/**
+	 * @ORM\ManyToOne(targetEntity="Code\CarBundle\Entity\Fabricante", inversedBy="carros")
+	 * @ORM\JoinColumn(name="fabricante_id", referencedColumnName="id")
+	 */
+	private $fabricante;
 
 	public function getId()
 	{
@@ -69,16 +66,6 @@ class Carro
 	     $this->modelo = $modelo;
 	}
 
-	public function getFabricante()
-	{
-	    return $this->fabricante;
-	}
-
-	public function setFabricante($fabricante)
-	{
-	    $this->fabricante = $fabricante;
-	}
-
 	public function getAno()
 	{
 	    return $this->ano;
@@ -97,5 +84,15 @@ class Carro
 	public function setCor($cor)
 	{
 	    $this->cor = $cor;
+	}
+
+	public function getFabricante()
+	{
+	    return $this->fabricante;
+	}
+
+	public function setFabricante($fabricante)
+	{
+	    $this->fabricante = $fabricante;
 	}
 }
