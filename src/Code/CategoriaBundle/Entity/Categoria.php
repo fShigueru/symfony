@@ -1,14 +1,14 @@
 <?php
-namespace Code\ProdutoBundle\Entity;
+namespace Code\CategoriaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Code\ProdutoBundle\Entity\ProdutoRepository")
+ * @ORM\Entity()
  */
-class Produto
+class Categoria
 {
 
 	/**
@@ -35,20 +35,19 @@ class Produto
 	private $descricao;
 
 	/**
-     * @ORM\OneToOne(targetEntity="ProdutoDetalhe")
-     * @ORM\JoinColumn(name="produto_detalhe_id", referencedColumnName="id")
-     */
-	private $detalhe;
+	* @ORM\ManyToMany(targetEntity="Code\ProdutoBundle\Entity\Produto", inversedBy="categorias")
+	* @ORM\JoinTable(name="categorias_produtos",
+	*      joinColumns={@ORM\JoinColumn(name="categoria_id", referencedColumnName="id")},
+	*      inverseJoinColumns={@ORM\JoinColumn(name="produto_id", referencedColumnName="id")}
+	*      )
+	**/
+	private $produtos;
 
-	/**
-     * @ORM\ManyToMany(targetEntity="Code\CategoriaBundle\Entity\Categoria", mappedBy="produtos")
-     **/
-	private $categorias;
 
 	//vai inicializar a collection de produtos
 	public function __construct()
 	{
-		$this->categorias = new ArrayCollection();
+		$this->produtos = new ArrayCollection();
 	}
 
 	public function getId()
@@ -80,24 +79,14 @@ class Produto
 	{
 	    $this->descricao = $descricao;
 	}
-
-	public function getDetalhe()
+	public function getProdutos()
 	{
-	    return $this->detalhe;
+	    return $this->produtos;
 	}
 
-	public function setDetalhe($detalhe)
+	public function addProduto($produto)
 	{
-	    $this->detalhe = $detalhe;
+	    $this->produtos[] = $produto;
 	}
 
-	public function getCategorias()
-	{
-	    return $this->categorias;
-	}
-
-	public function addCategoria($categoria)
-	{
-	    $this->categorias[] = $categoria;
-	}
 }

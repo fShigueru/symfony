@@ -4,7 +4,17 @@
 Oii teste doctrine
 <ul>
     {% for produto in produtos %}
-        <li>{{ produto.nome }}</li>
+        <li>{{ produto.nome }}
+        	(peso : {{ produto.detalhe.peso }},
+        	 altura : {{ produto.detalhe.altura}},
+        	 largura : {{ produto.detalhe.largura}}
+        	 )
+        	 <ul>
+        	 	{% for categoria in produto.categorias %}
+        	 		<li>{{ categoria.nome }}</li>
+    			{% endfor %}
+        	 </ul>
+        </li>
     {% endfor %}
 </ul>
 {% endblock %}

@@ -5,7 +5,9 @@ namespace Code\ProdutoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Code\ProdutoBundle\Entity\ProdutoDetalhe;
 use Code\ProdutoBundle\Entity\Produto;
+use Code\CategoriaBundle\Entity\Categoria;
 
 
 class DefaultController extends Controller
@@ -24,24 +26,60 @@ class DefaultController extends Controller
      */
     public function testeAction()
     {
+
+        //teste ManyToMany
+        $categoriaOne = new Categoria();
+        $categoriaOne->setNome("Categoria Eletronicos");
+        $categoriaOne->setDescricao("Descrição da categoria eletronicos");
+
+        $categoriaTwo = new Categoria();
+        $categoriaTwo->setNome("Categoria Informatica");
+        $categoriaTwo->setDescricao("Descrição da categoria de Informatica");
+
+
+        //inserindo um novo produto
     	$produto = new Produto();
-    	#$produto->setNome("Notebook B");
-    	#$produto->setDescricao("Essa é a descrição do notebook B");
+    	$produto->setNome("Notebook C");
+    	$produto->setDescricao("Essa é a descrição do notebook C");
+        //adicionando as categorias a produto
+        $produto->addCategoria($categoriaOne);
+        $produto->addCategoria($categoriaTwo);
+
+        //inserindo o detalhe do produto, que está relacionado a o produto
+        $produtoDetalhe = new ProdutoDetalhe();
+        $produtoDetalhe->setPeso(1);
+        $produtoDetalhe->setLargura(15);
+        $produtoDetalhe->setAltura(10);
+
+        //inserir o produtoDetalhe no produto
+        $produto->setDetalhe($produtoDetalhe);
+
     	//chama o entyti manager
     	$em = $this->getDoctrine()->getManager();
-    	//persiste a entidade
-    	#$em->persist($produto);
+
+        //busca uma categoria
+        // $repoCategoria = $em->getRepository("CodeCategoriaBundle:Categoria");
+        // $produto->setCategoria($repoCategoria->find(1));
+
+        //persiste na primeira categoria
+        $em->persist($categoriaOne);
+        //persiste na segunda categoria
+        $em->persist($categoriaTwo);
+        //persiste a entidade produtoDetalhe
+        $em->persist($produtoDetalhe);
+    	//persiste a entidade produto
+    	$em->persist($produto);
     	//grava
-    	#$em->flush();
+    	$em->flush();
 
         //Find all
         //Repository da entidade Produto
         //$repo = $em->getRepository("Code\ProdutoBundle\Entity\Produto");
         $repo = $em->getRepository("CodeProdutoBundle:Produto");
         //busca todos
-        //$produtos = $repo->findAll();
+        $produtos = $repo->findAll();
         //metodo criado no ProdutoRepository
-        $produtos = $repo->getProdutoIdMaiorQue(1);
+        #$produtos = $repo->getProdutoIdMaiorQue(1);
 
     	return ['produtos' => $produtos];
     }

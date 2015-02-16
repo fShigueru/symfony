@@ -1,1 +1,16 @@
-Hello {{ name }}!
+{% extends '::base.html.twig' %}
+
+{% block body %}
+Oii teste doctrine
+<ul>
+    {% for categoria in categorias %}
+        <li>{{ categoria.nome }}
+        	<ul>
+        	{% for produto in categoria.produtos %}
+        		<li>{{ produto.nome }}</li>
+    		{% endfor %}
+        	</ul>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
