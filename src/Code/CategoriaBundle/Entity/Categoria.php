@@ -23,7 +23,7 @@ class Categoria
 	/**
 	 *@var string
 	 *
-	 * @ORM\Column(name="name", type="string" ,length=255)
+	 * @ORM\Column(name="nome", type="string" ,length=255)
 	 */
 	private $nome;
 

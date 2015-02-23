@@ -23,7 +23,7 @@ class Produto
 	/**
 	 *@var string
 	 *
-	 * @ORM\Column(name="name", type="string" ,length=255)
+	 * @ORM\Column(name="nome", type="string" ,length=255)
 	 */
 	private $nome;
 
@@ -34,10 +34,10 @@ class Produto
 	 */
 	private $descricao;
 
-	/**
-     * @ORM\OneToOne(targetEntity="ProdutoDetalhe")
-     * @ORM\JoinColumn(name="produto_detalhe_id", referencedColumnName="id")
-     */
+//	/**
+//     * @ORM\OneToOne(targetEntity="ProdutoDetalhe")
+//     * @ORM\JoinColumn(name="produto_detalhe_id", referencedColumnName="id")
+//     */
 	private $detalhe;
 
 	/**
@@ -50,6 +50,19 @@ class Produto
 	{
 		$this->categorias = new ArrayCollection();
 	}
+
+	public function getCategorias()
+	{
+	    return $this->categorias;
+	}
+
+	public function addCategoria($categoria)
+	{
+		//dessa forma informamos que o lado mandante é o produto
+	    $categoria->addProduto($this);
+        $this->categorias[] = $categoria;
+	}
+
 
 	public function getId()
 	{
@@ -89,15 +102,5 @@ class Produto
 	public function setDetalhe($detalhe)
 	{
 	    $this->detalhe = $detalhe;
-	}
-
-	public function getCategorias()
-	{
-	    return $this->categorias;
-	}
-
-	public function addCategoria($categoria)
-	{
-	    $this->categorias[] = $categoria;
 	}
 }

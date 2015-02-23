@@ -2,12 +2,12 @@
 
 namespace Code\ProdutoBundle\Controller;
 
+use Code\ProdutoBundle\Entity\Produto;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Code\ProdutoBundle\Entity\ProdutoDetalhe;
-use Code\ProdutoBundle\Entity\Produto;
 use Code\CategoriaBundle\Entity\Categoria;
+use Code\ProdutoBundle\Entity\ProdutoDetalhe;
 
 
 class DefaultController extends Controller
@@ -52,7 +52,7 @@ class DefaultController extends Controller
         $produtoDetalhe->setAltura(10);
 
         //inserir o produtoDetalhe no produto
-        $produto->setDetalhe($produtoDetalhe);
+        //$produto->setDetalhe($produtoDetalhe);
 
     	//chama o entyti manager
     	$em = $this->getDoctrine()->getManager();
@@ -66,7 +66,7 @@ class DefaultController extends Controller
         //persiste na segunda categoria
         $em->persist($categoriaTwo);
         //persiste a entidade produtoDetalhe
-        $em->persist($produtoDetalhe);
+       // $em->persist($produtoDetalhe);
     	//persiste a entidade produto
     	$em->persist($produto);
     	//grava
