@@ -1,12 +1,15 @@
 <?php
-
-namespace Code\ProdutoBundle\Form;
+namespace Code\CarBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ProdutoType extends AbstractType {
+/**
+ * Class FabricanteType
+ * @package Code\CarBundle\Form
+ */
+class FabricanteType extends AbstractType {
 
     /**
      * definimos os campos, e trabalhamos com seus tipos..
@@ -18,8 +21,7 @@ class ProdutoType extends AbstractType {
     {
         //apartir de uma array podemos definir argumentos para nossos forms
         $builder
-            ->add('nome', 'text', ['label' => 'Produto', 'required' => true, 'attr' => ['class' => 'xpto']])
-            ->add('descricao')
+            ->add('nome', 'text', ['label' => 'Fabricante', 'required' => true])
         ;
     }
 
@@ -32,19 +34,18 @@ class ProdutoType extends AbstractType {
     {
         //dessa forma amarramos o form com a entidade
         $resolver->setDefaults(
-            ['data_class' => 'Code\ProdutoBundle\Entity\Produto']
+            ['data_class' => 'Code\CarBundle\Entity\Fabricante']
         );
     }
 
 
     /**
      * Returns the name of this type.
-     * nome do type, será o prefixo dos "name"
      *
      * @return string The name of this type
      */
     public function getName()
     {
-        return "code_produtobundle_produtotype";
+        return "code_carbundle_fabricatetype";
     }
 }

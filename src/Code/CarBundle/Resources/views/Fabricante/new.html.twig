@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Novo fabricante{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Adicionar um novo fabricante</h1>
+        <form action="{{ path('fabricante_create') }}" method="post">
+            {{ form_widget(form) }}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a href="{{ path('listaFabricantes') }}" class="btn">Voltar</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

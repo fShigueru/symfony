@@ -1,16 +1,21 @@
 <?php
 namespace Code\CarBundle\Controller;
 
+use Code\CarBundle\Form\FabricanteType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Code\CarBundle\Entity\Carro;
 use Code\CarBundle\Entity\Fabricante;
+use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @Route("/fabricantes")
+ */
 class FabricanteController extends Controller
 {
     /**
-     * @Route("/fabricantes", name="listaFabricantes")
+     * @Route("", name="listaFabricantes")
      * @Template()
      */
     public function indexAction()
@@ -25,28 +30,42 @@ class FabricanteController extends Controller
     }
 
     /**
-     * @Route("/fabricante/save")
+     * @Route("/save", name="fabricante_new")
      * @Template()
      */
-    public function saveAction()
+    public function newAction()
     {
-        $fabricante = new Fabricante();
-        $fabricante->setNome("Kia Motors Corporation");
+        $entity = new Fabricante();
+        //passamos o type e a entidade
+        $form = $this->createForm(new FabricanteType(), $entity);
 
-        $fabricante2 = new Fabricante();
-        $fabricante2->setNome("Lincoln Veículos");
+        return [
+            'entity' => $entity,
+            'form'   => $form->createView()
+        ];
+    }
 
-        $fabricante3 = new Fabricante();
-        $fabricante3->setNome("Lotus Cars Limited");
+    /**
+     * @Route("/create", name="fabricante_create")
+     * @Template()
+     */
+    public  function createAction(Request $request)
+    {
+        $entity = new Fabricante();
+        $form = $this->createForm(new FabricanteType(), $entity);
+        $form->bind($request);
 
-        //chama o entyti manager
-        $em = $this->getDoctrine()->getManager();
+        if($form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
 
-        $em->persist($fabricante);
-        $em->persist($fabricante2);
-        $em->persist($fabricante3);
-        $em->flush();
+            return $this->redirect($this->generateUrl("listaFabricantes"));
+        }
 
-        return $this->redirect($this->generateUrl('listaFabricantes'));
+        return[
+            'entity' => $entity,
+            'form'   => $form->createView()
+        ];
     }
 }

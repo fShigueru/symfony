@@ -47,6 +47,7 @@ class ProdutoController extends Controller
     public function createAction(Request $request)
     {
         $entity = new Produto();
+        //amarra o ProdutoType com a entidade
         $form = $this->createForm(new ProdutoType(), $entity);
         //agora vamos relacionar os dados enviados a entidade
         $form->bind($request);
