@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1>Editando produto: {{ entity.nome }}</h1>
+
+        <form action="{{ path('produto_update', {'id' : entity.id} ) }}" method="post">
+            <!-- helper que gera o form, o valor form é o mesmo do return no metodo -->
+            {{ form_widget(form) }}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <a href="{{ path('produto') }}" class="btn">Voltar</a>
+            </div>
+        </form>
+
+    </div>
+{% endblock %}

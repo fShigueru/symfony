@@ -41,7 +41,11 @@ class Produto
 	private $detalhe;
 
 	/**
-     * @ORM\ManyToMany(targetEntity="Code\CategoriaBundle\Entity\Categoria", mappedBy="produtos")
+     * @ORM\ManyToMany(targetEntity="Code\CategoriaBundle\Entity\Categoria", inversedBy="produtos")
+     * @ORM\JoinTable(name="categorias_produtos",
+     *      joinColumns={@ORM\JoinColumn(name="produto_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="categoria_id", referencedColumnName="id")}
+     *      )
      **/
 	private $categorias;
 
@@ -59,7 +63,7 @@ class Produto
 	public function addCategoria($categoria)
 	{
 		//dessa forma informamos que o lado mandante é o produto
-	    $categoria->addProduto($this);
+	    //$categoria->addProduto($this);
         $this->categorias[] = $categoria;
 	}
 

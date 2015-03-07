@@ -66,4 +66,72 @@ class ProdutoController extends Controller
             'form'   => $form->createView()
         ];
     }
+
+    /**
+     * @Route("/{id}/edit", name="produto_edit")
+     * @Template()
+     */
+    public function editAction($id)
+    {
+        //quando for editar, primeiro precisamos buscar oque vamos editar no banco de dados
+        $em = $this->getDoctrine()->getManager();
+        $entity =  $em->getRepository("CodeProdutoBundle:Produto")->find($id);
+
+        if(!$entity)
+            throw $this->createNotFoundException("Registro não encontrado");
+
+        //amarramos o form e ela já preenche o form, por causa da entity
+        $form = $this->createForm(new ProdutoType(), $entity);
+        return [
+            'entity' => $entity,
+            'form'   => $form->createView()
+        ];
+    }
+
+    /**
+     * @Route("/{id}/update", name="produto_update")
+     * @Template("CodeProdutoBundle:Produto:edit.html.twig")
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity =  $em->getRepository("CodeProdutoBundle:Produto")->find($id);
+
+        if(!$entity)
+            throw $this->createNotFoundException("Registro não encontrado");
+
+        $form = $this->createForm(new ProdutoType(), $entity);
+        //vamos fazer um bind com as informações enviadas pelo form com a entidade estanciada
+        $form->bind($request);
+
+        if($form->isValid()){
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('produto'));
+        }
+
+        return [
+            'entity' => $entity,
+            'form'   => $form->createView()
+        ];
+    }
+
+    /**
+     * @Route("/{id}/delete", name="produto_delete")
+     * @Template()
+     */
+    function deleteAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity =  $em->getRepository("CodeProdutoBundle:Produto")->find($id);
+
+        if(!$entity)
+            throw $this->createNotFoundException("Registro não encontrado");
+
+        $em->remove($entity);
+        $em->flush();
+        return $this->redirect($this->generateUrl('produto'));
+
+    }
 }

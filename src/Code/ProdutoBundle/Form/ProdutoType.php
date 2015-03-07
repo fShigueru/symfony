@@ -20,6 +20,11 @@ class ProdutoType extends AbstractType {
         $builder
             ->add('nome', 'text', ['label' => 'Produto', 'required' => true, 'attr' => ['class' => 'xpto']])
             ->add('descricao')
+            //como está relacionado e vem multiplos valores, o symfone já sabe que é um select
+                //e como é many to many ele já da a opção de multiplos selects
+                //mas precisamos defirnir qual campo será impresso, então na entidade de categorias
+                //definimos um metodo __toString e retornamos o valor
+            ->add('categorias')
         ;
     }
 

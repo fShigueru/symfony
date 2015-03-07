@@ -35,11 +35,7 @@ class Categoria
 	private $descricao;
 
 	/**
-	* @ORM\ManyToMany(targetEntity="Code\ProdutoBundle\Entity\Produto", inversedBy="categorias")
-	* @ORM\JoinTable(name="categorias_produtos",
-	*      joinColumns={@ORM\JoinColumn(name="categoria_id", referencedColumnName="id")},
-	*      inverseJoinColumns={@ORM\JoinColumn(name="produto_id", referencedColumnName="id")}
-	*      )
+	* @ORM\ManyToMany(targetEntity="Code\ProdutoBundle\Entity\Produto", mappedBy="categorias")
 	**/
 	private $produtos;
 
@@ -89,4 +85,13 @@ class Categoria
 	    $this->produtos[] = $produto;
 	}
 
+    /**
+     * definimos qual valor será retornado para uma toString da classe fabricante
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getNome();
+    }
 }
