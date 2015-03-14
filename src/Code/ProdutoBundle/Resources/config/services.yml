@@ -1,0 +1,5 @@
+services:
+  code_produto.service.produto:
+    class: Code\ProdutoBundle\Service\ProdutoService
+    arguments:
+      - "@doctrine.orm.default_entity_manager"

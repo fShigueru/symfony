@@ -54,9 +54,10 @@ class ProdutoController extends Controller
 
         //se o form for válido
         if($form->isValid()){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            //chamando o service de produtos
+            $produtoServices = $this->get('code_produto.service.produto');
+            //usando o metodo insert
+            $entity = $produtoServices->insert($entity);
 
             return $this->redirect($this->generateUrl('produto'));
         }
@@ -105,9 +106,8 @@ class ProdutoController extends Controller
         $form->bind($request);
 
         if($form->isValid()){
-            $em->persist($entity);
-            $em->flush();
-
+            $produtoService = $this->get("code_produto.service.produto");
+            $entity = $produtoService->update($entity);
             return $this->redirect($this->generateUrl('produto'));
         }
 
@@ -129,8 +129,9 @@ class ProdutoController extends Controller
         if(!$entity)
             throw $this->createNotFoundException("Registro não encontrado");
 
-        $em->remove($entity);
-        $em->flush();
+        $produtoService = $this->get("code_produto.service.produto");
+        $produtoService->delete($entity);
+
         return $this->redirect($this->generateUrl('produto'));
 
     }

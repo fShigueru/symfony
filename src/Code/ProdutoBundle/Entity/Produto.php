@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Code\ProdutoBundle\Entity\ProdutoRepository")
  */
-class Produto
+class Produto implements ProdutoInterface
 {
 
 	/**
